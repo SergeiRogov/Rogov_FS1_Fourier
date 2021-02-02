@@ -1,0 +1,105 @@
+% ---------------------------- Problem 1----------------------------------
+\subsubsection*{\center Задача № 1.}
+{\bf Условие.~}
+Разложить в ряд Фурье заданную функцию $f(x)$, построить графики $f(x)$ и суммы ее ряда Фурье. Если не указывается, какой вид разложения в ряд необходимо представить, то требуетчя разложить функцию либо в общий тригонометрический ряд Фурье, либо следует выбрать оптимальный вид разложения в зависимости от данной функции.
+\[
+f(x)=x^{3/2}\;  \text{на отрезке}\ \:[0;\,\pi].	
+\]
+
+{\bf Решение.~}	
+%График
+\begin{center}
+	\begin{tikzpicture}
+	\begin{axis}[xmin=-1,	xmax=3.5, 	ymin=-1,	ymax=6.9,
+	width=0.5\textwidth,
+	height=0.4\textwidth,
+	axis x line=middle,
+	axis y line=middle, 
+	every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+	every inner x axis line/.append style={|-latex'},
+	every inner y axis line/.append style={|-latex'},
+	minor tick num=1,			
+	axis equal=true,
+	xlabel=$x$, 
+	ylabel=$y$,          
+	samples=100,
+	clip=true,
+	]
+	\addplot[color=black, line width=1.5pt,domain=0:pi]{\x^(3/2)};
+	\addplot[thick,dashed] coordinates {(pi,0) (pi,pi^(3/2))};
+	\addplot[
+	mark=*,
+	mark options={fill=black, draw=black},
+	only marks,
+	] coordinates {(pi,pi^(3/2))};
+	\end{axis}
+	\end{tikzpicture}
+\end{center}
+\noindent
+Доопределим функцию четным образом на отрезке [-\pi;0]:
+%График
+\begin{center}
+	\begin{tikzpicture}
+	\begin{axis}[xmin=-1,	xmax=3.5, 	ymin=-1,	ymax=6.9,
+	width=0.5\textwidth,
+	height=0.4\textwidth,
+	axis x line=middle,
+	axis y line=middle, 
+	every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+	every inner x axis line/.append style={|-latex'},
+	every inner y axis line/.append style={|-latex'},
+	minor tick num=1,			
+	axis equal=true,
+	xlabel=$x$, 
+	ylabel=$y$,          
+	samples=100,
+	clip=true,
+	]
+	\addplot[color=black, line width=1.5pt,domain=0:pi]{\x^(3/2)};
+	\addplot[color=black, line width=1.5pt,domain=-pi:0]{(-\x)^(3/2)};
+	\addplot[thick,dashed] coordinates {(pi,0) (pi,pi^(3/2))};
+	\addplot[thick,dashed] coordinates {(-pi,0) (-pi,pi^(3/2))};
+	\addplot[
+	mark=*,
+	mark options={fill=black, draw=black},
+	only marks,
+	] coordinates {(pi,pi^(3/2))};
+	\addplot[
+	mark=*,
+	mark options={fill=black, draw=black},
+ 
+%16
+	only marks,
+	] coordinates {(-pi,pi^(3/2))};
+	\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+\noindent
+Для полученной четной функции построим ряд Фурье на отрезке [-\pi;\pi]:
+
+
+$$
+f_1(x)=\frac{a_0}{2}+\sum_{n=1}^\infty 
+	\left(a_n\cos{\frac{\pi n x}{L}}\right),\quad\text{где }\,L=\pi
+$$
+\noindent
+Вычислим коэффициенты
+$$
+\begin{array}{rcl}
+a_0 &=& \displaystyle\frac{2}{\pi}\left.
+\int\limits_0^\pi
+x^\frac{3}{2}\,dx  = 
+\frac{2}{\pi}\left(\frac{2x^\frac{5}{2}}{5}
+\right)
+\right|_0^\pi  = \frac{4\pi^\frac{3}{2}}{5},						\\[12pt]
+a_n &=& \displaystyle\frac{2}{\pi}
+	\int\limits_0^\pi
+	x^\frac{3}{2}\cos {nx}\,dx   =               \\[12pt]
+	&=& 
+\end{array}
+$$
+Применив теорему Дирихле о поточечной сходимости ряда Фурье, видим, что построенный ряд Фурье сходится 
+к периодическому (с периодом $T=2\pi$) продолжению исходной функции при всех $x\ne 2\pi n$, и 
+$S(2\pi n)=\frac{\pi^\frac{3}{2}}{2}$ при $n=0,\pm1,\pm2,\ldots$, где $S(x)$ --- сумма ряда Фурье. 
+График функции $S(x)$ имеет следующий вид:
