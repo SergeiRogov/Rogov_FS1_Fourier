@@ -67,8 +67,6 @@ f(x)=x^{3/2}\;  \text{на отрезке}\ \:[0;\,\pi].
 	\addplot[
 	mark=*,
 	mark options={fill=black, draw=black},
- 
-%16
 	only marks,
 	] coordinates {(-pi,pi^(3/2))};
 	\end{axis}
@@ -95,11 +93,200 @@ x^\frac{3}{2}\,dx  =
 \right|_0^\pi  = \frac{4\pi^\frac{3}{2}}{5},						\\[12pt]
 a_n &=& \displaystyle\frac{2}{\pi}
 	\int\limits_0^\pi
-	x^\frac{3}{2}\cos {nx}\,dx   =               \\[12pt]
-	&=& 
+	x^\frac{3}{2}\cos {nx}\,dx   = \int_0^\pi x^{\frac{3}{2}} \cos{n x} dx = \frac{\sqrt{\pi}\left(-3 \sqrt{2}\sqrt{n}\;  C(\sqrt{2} \sqrt{n}) + 4 \pi n^2 \sin{\pi n} + 6 n \cos{\pi n}\right)}{4 n^3}.       \\[12pt]
+	
 \end{array}
 $$
+\noindent
+[C(t) - интеграл Френеля]\\
+\noindent
+[Ответ взят из пакета WolframAlpha, так как вычислить интеграл известными способами не получилось]\\
+\noindent
 Применив теорему Дирихле о поточечной сходимости ряда Фурье, видим, что построенный ряд Фурье сходится 
-к периодическому (с периодом $T=2\pi$) продолжению исходной функции при всех $x\ne 2\pi n$, и 
-$S(2\pi n)=\frac{\pi^\frac{3}{2}}{2}$ при $n=0,\pm1,\pm2,\ldots$, где $S(x)$ --- сумма ряда Фурье. 
+к периодическому (с периодом $T=2\pi$) продолжению функции $f_1(x)$ при всех $x$, так как полученная функция $f_1(x)$ --- четная. 
 График функции $S(x)$ имеет следующий вид:
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[xmin=-7, xmax=7, ymin=-1, ymax=7,
+width=0.8\textwidth,
+height=0.4\textwidth,
+axis x line=middle,
+axis y line=middle,
+every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+every inner x axis line/.append style={|-latex'},
+every inner y axis line/.append style={|-latex'},
+minor tick num=1,
+axis equal=true,
+xlabel=$x$,
+ylabel=$S(x)$,
+samples=100,
+clip=true,
+]
+\addplot[color=black, line width=1.5pt,domain=0:pi]{\x^(3/2)};
+	\addplot[color=black, line width=1.5pt,domain=-pi:0]{(-\x)^(3/2)};
+	\addplot[thick,dashed] coordinates {(pi,0) (pi,pi^(3/2))};
+	\addplot[thick,dashed] coordinates {(-pi,0) (-pi,pi^(3/2))};
+	%\addplot[color=black, line width=1.5pt,domain=pi:(2pi)]{(-(\x-2\pi))^(3/2)};
+	%\addplot[color=black, line width=1.5pt,domain=(-2pi):-pi]{(\x+2\pi)^(3/2)};
+	\addplot[
+	mark=*,
+	mark options={fill=black, draw=black},
+	only marks,
+	] coordinates {(-pi,pi^(3/2))};
+	\addplot[
+	mark=*,
+	mark options={fill=black, draw=black},
+	only marks,
+	] coordinates {(pi,pi^(3/2))};
+
+
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\noindent
+\textbf{Ответ:}
+\[
+\begin{split}
+&f(x)=\frac{4\pi^\frac{3}{2}}{5}+\sum_{n=1}^\infty\left[\frac{\sqrt{\pi}\left(-3 \sqrt{2}\sqrt{n}\;  C(\sqrt{2} \sqrt{n}) + 4 \pi n^2 \sin{\pi n} + 6 n \cos{\pi n}\right)}{4 n^3}\cos{ nx}\right], 
+\end{split}
+\]
+
+
+
+
+% ---------------------------- Problem 2----------------------------------
+\subsubsection*{\center Задача № 2.}
+{\bf Условие.~}
+Для заданной графически функции $y(x)$ построить ряд Фурье в комплексной форме, изобразить график суммы построенного ряда
+
+%График
+\begin{center}
+\begin{tikzpicture}[
+		declare function={
+			func(\x)=
+			and(\x >= 0, \x <= 2) * 0.5 * (2 - \x) + 
+			(\x > 2) * 0.0;
+		}
+		]
+		\begin{axis}[
+		axis x line=middle, axis y line=middle,
+		axis equal,	
+		ymin=-1.1, ymax=1.1, ytick={-1,...,1}, ylabel=$y$,
+		xmin=-1.1, xmax=7, xtick={-1,...,6}, xlabel=$x$,
+		domain=0.0:6,samples=600 % added		
+		]
+		
+		\addplot [domain=0:2,black,line width=2pt] {0.5 * (2 - \x)};
+		\addplot [domain=2:6,black,line width=2pt] {0.0};		
+		\end{axis}
+		\end{tikzpicture}
+\end{center}
+
+\noindent
+\textbf{Решение.}\\
+
+\noindent
+Ряд Фурье в комплексной форме имеет следующий вид
+\[
+f(x) = \sum_{n=-\infty}^\infty c_n e^{i\omega nx},\quad c_n=\frac{1}{T}\int\limits_a^b f(x) e^{-i\omega nx}dx,\,\omega=\frac{2\pi}{T}.
+\]
+В нашем примере $ a=0,b=6,T=6,\omega=\pi/3$, 
+найдем коэффицинеты $c_n,\,n=0,\pm1,\pm2,\ldots$
+где $\omega=2\pi/T,\,T=6.$
+
+$$
+\begin{array}{rcl}
+c_0 &=&\displaystyle\frac{1}{6} \int\limits_0^6 f(x)dx=\frac{a_0}{2}=\frac{1}{6}\left(2-\frac{1}{2}\int\limits_0^2 x dx\right)=\frac{1}{6},\\[12pt]
+c_n &=&\displaystyle\frac{1}{6}
+\int\limits_0^2
+(1-\frac{x}{2})e^{-i\omega nx}dx={}\\[12pt]
+&=&\displaystyle\frac{1}{6}\left(\int\limits_0^2 e^{-i\omega nx}dx - \left\frac{1}{2}\int\limits_0^2 xe^{-i\omega nx}dx\right)\right\right=\frac{1}{6}\left(\left\frac{i}{\omega n}e^{-i\omega nx}\right|_0^2-\frac{1}{2}\left(\left\frac{i}{\omega n}e^{-i\omega nx}x\right|_0^2-\frac{i}{\omega n}\int\limits_0^2 e^{-i\omega nx}dx\right)\right)={}\\[12pt]
+&=&\displaystyle\frac{1}{6}\left(\frac{i}{\omega n}e^{-2i\omega n}-\frac{i}{\omega n}-\frac{1}{2}\left(\frac{2i}{\omega n}e^{-2i\omega n}-\frac{i}{\omega n}\left(\frac{i}{\omega n}e^{-2i\omega n}-\frac{i}{\omega n}\right)\right)\right)={}\\[12pt]
+&=&\displaystyle\frac{1}{6}\left(\frac{i}{\omega n}e^{-2i\omega n}-\frac{i}{\omega n}-\frac{i}{\omega n}e^{-2i\omega n}-\frac{1}{2\omega^2 n^2}e^{-2i\omega n}+\frac{1}{2\omega^2 n^2}\right)={}\\[12pt]
+&=&\displaystyle \frac{1}{12\omega^2 n^2}(1-e^{-2i\omega n})-\frac{i}{6\omega n}={}\\[12pt]
+&=&\displaystyle \frac{1}{12\omega^2 n^2}(1-cos{\frac{2\pi n}{3}}+isin{\frac{2\pi n}{3}})-\frac{i}{6\omega n}.\end{array}.
+$$
+\noindent
+Применив теорему Дирихле о поточечной сходимости ряда Фурье, видим, что построенный ряд Фурье сходится 
+к периодическому (с периодом $T=6$) продолжению исходной функции при всех $x\ne 6n$, и $S(6n)=1/2$ при 
+$n=0,\pm1,\pm2,\ldots$, где $S(x)$ --- сумма ряда Фурье. График функции $S(x)$ имеет вид
+\begin{center}
+	\begin{tikzpicture}
+	\begin{axis}[xmin=-6, xmax=6, ymin=-1, ymax=0.5,
+	width=0.8\textwidth,
+	height=0.4\textwidth,
+	axis x line=middle,
+	axis y line=middle, 
+	every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+	every inner x axis line/.append style={|-latex'},
+	every inner y axis line/.append style={|-latex'},
+	minor tick num=1,			
+	axis equal=true,
+	xlabel=$x$, 
+	ylabel=$S(x)$,          
+	samples=100,
+	clip=true,
+	]
+	\addplot[color=black, line width=1.5pt,domain=-6:-4] {-2-\x/2};
+	\addplot[color=black, line width=1.5pt,domain=-4:0]{0};
+	\addplot[color=black, line width=1.5pt,domain=0:2] {1-\x/2};
+	\addplot[color=black, line width=1.5pt,domain=2:6]{0};
+	\addplot[thick,dashed] coordinates {(0,0) (0,1)};
+	\addplot[
+	mark=*,
+	mark options={fill=black, draw=black},
+	only marks,
+	] coordinates {(-6, 0.5)};
+		\addplot[
+	mark=*,
+	mark options={fill=black, draw=black},
+	only marks,
+	] coordinates {(0, 0.5)};
+		\addplot[
+	mark=*,
+	mark options={fill=black, draw=black},
+	only marks,
+	] coordinates {(6, 0.5)};
+	\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+\noindent
+\textbf{Ответ:}
+\[
+\begin{split}
+&f(x)=\sum_{n=-\infty}^\infty\left[\frac{3}{4\pi^2 n^2}\left(1-\cos{\frac{2\pi n}{3}}+i\sin{\frac{2\pi n}{3}}\right)-\frac{i}{2\pi n} \right] e^{\tfrac{i\pi nx}{3}},~ x\ne 6n; \\
+&S(6n)=\frac{1}{2},\quad\text{при}~n\in\mathbb{Z}.
+\end{split}
+\]
+
+% —------------------------— Problem 3----------------------------------
+\subsubsection*{\center Задача № 3.}
+{\bf Условие.~}\\
+Найти резольвенту для интегрального уравнения Вольтерры со следующим ядром
+$$K(x,t)=x^\frac{1}{3}t^\frac{1}{3}.$$
+
+\noindent
+{\bf Решение.~}\\
+\noindent
+Запишем интегральное уравнение Вольтерры
+$$
+y(x)=x^3+\int\limits_0^x x y(t)dt.
+$$
+Из рекурентных соотношений получаем
+$$
+\begin{array}{rcl}
+K_1(x,t)&=&\displaystyle x^\frac{1}{3}t^\frac{1}{3}, \\[12pt]
+K_2(x,t)&=&\displaystyle\int\limits_t^x K(x,s)K_1(s,t)ds = \int\limits_t^x x^\frac{1}{3}s^\frac{2}{3}t^\frac{1}{3} ds = x^\frac{1}{3}t^\frac{1}{3}\cdot\frac{3 (x^\frac{5}{3}-t^\frac{5}{3})}{5},\\[12pt]
+K_3(x,t)&=&\displaystyle\int\limits_t^x K(x,s)K_2(s,t)ds = \int\limits_t^x x^\frac{1}{3}t^\frac{1}{3}\cdot\frac{3 (s^\frac{7}{3}-s^\frac{2}{3}t^\frac{5}{3})}{5} ds = x^\frac{1}{3}t^\frac{1}{3}\frac{3}{5}\int\limits_t^x s^\frac{7}{3}-s^\frac{2}{3}t^\frac{5}{3}ds ={}\\
+&=&x^\frac{1}{3}t^\frac{1}{3}\frac{3}{10}(x^{\frac{5}{3}}-t^{\frac{5}{3}})^2.\\[12pt]
+K_j(x,t)&=&\displaystylex x^\frac{1}{3}t^\frac{1}{3}\frac{3}{5(j-1)!}\left(x^\frac{5}{3}-t^\frac{5}{3}\right)^{j-1}\!\!\!\!\!\!\!\   j=\mathbb{N}, \text{где}\; K_1(x,t)=x^\frac{1}{3}t^\frac{1}{3}\; \text{задаётся отдельно.}
+\end{array}
+$$
+Подставляя это выражение для итерированных ядер, найдем резольвенту
+$$
+R(x,t,\lambda)=\frac{3}{5}x^\frac{1}{3}t^\frac{1}{3}\sum_{j=1}^\infty \frac{\lambda^{j-1}}{(j-1)!}\left(x^\frac{5}{3}-t^\frac{5}{3}\right)^{j-1}\!\!\!\!\!\!\!\ ,
+\quad j=1,2,\ldots
+$$
